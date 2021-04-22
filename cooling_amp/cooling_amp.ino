@@ -12,7 +12,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 const float baselineTemp = 26.0;
-float temp = 0;
+float tempInside = 0;
 const int switchFanPin = 7;
 const int fanPwm = 5;
 
@@ -26,7 +26,7 @@ void setup() {
 
 void loop() {
   sensors.requestTemperatures();
-  temp = sensors.getTempCByIndex(0);
+  tempInside = sensors.getTempCByIndex(0);
   Serial.print("Temperature Celsius: ");
   Serial.println(temp);
 
