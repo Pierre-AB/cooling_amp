@@ -1,35 +1,45 @@
-const int firstSensorPin = A0;
-const float baselineTemp = 30.0;
-const float firstTemp = 0;
-const int switchFanPin = 7; //3
+
+// import DS18B20 related library
+
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+//Data wire is connected to the Arduino digital pin 4
+#define ONE_WIRE_BUS 2
+// Setup a oneWire instance to communicate with any OneWire devices
+OneWire oneWire(ONE_WIRE_BUS);
+// Pass our oneWire reference to Dallas Temperature sensor
+DallasTemperature sensors(&oneWire);
+
+const float baselineTemp = 26.0;
+float temp = 0;
+const int switchFanPin = 7;
 const int fanPwm = 5;
 
 void setup() {
   Serial.begin(9600);
   pinMode(switchFanPin, OUTPUT);
   digitalWrite(switchFanPin, LOW);
-  
+  sensors.begin();  
 
 }
 
 void loop() {
-  int sensorVal = analogRead(firstSensorPin);
-  Serial.print("Valeur capteur : ");
-  Serial.print(sensorVal);
-
-  float voltage = (sensorVal/1024.0)*5.0;
-  Serial.print(", Volts : ");
-  Serial.print(voltage);
-  Serial.print(", degres C : ");
-  float temperature = (voltage - 0.5)*100;
-  Serial.println(temperature);
+  sensors.requestTemperatures();
+  temp = sensors.getTempCByIndex(0);
+  Serial.print("Temperature Celsius: ");
+  Serial.println(temp);
 
 
-  if(temperature > baselineTemp) {
+  if(temp > baselineTemp) {
     digitalWrite(switchFanPin, HIGH);
     } else {
       digitalWrite(switchFanPin, LOW);
       
       }
+
+   
+
+      delay(5000);
 
 }
