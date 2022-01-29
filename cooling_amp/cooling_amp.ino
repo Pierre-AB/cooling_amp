@@ -28,10 +28,10 @@ void loop() {
   sensors.requestTemperatures();
   tempInside = sensors.getTempCByIndex(0);
   Serial.print("Temperature Celsius: ");
-  Serial.println(temp);
+  Serial.println(tempInside);
 
 
-  if(temp > baselineTemp) {
+  if(tempInside > baselineTemp) {
     digitalWrite(switchFanPin, HIGH);
     } else {
       digitalWrite(switchFanPin, LOW);
