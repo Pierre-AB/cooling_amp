@@ -29,7 +29,7 @@ for(int i=0; i<15; i++){
     pinMode(i, OUTPUT);}
   }
 
-  pinMode(switchFanPin, OUTPUT);
+  pinMode(switchFanPin, OUTPUT)
   digitalWrite(switchFanPin, LOW);
   //Temp Sensor Setup
   sensors.begin();  // Start up the library
